@@ -1,0 +1,41 @@
+* {
+	box-sizing: border-box;	
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Verdana, sans-serif;
+	color: #4F545F;
+}
+
+h1 {
+	padding: 20px;
+	margin: 0;
+	color: white;
+	background-color: #0576BB;
+}
+
+#navMenu {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	background-color: #04A1FF;
+	overflow: hidden;
+}
+
+#navMenu > li {
+	float: left;
+	padding: 10px 20px;
+}
+
+#navMenu > li:hover, .selected {
+	color: white;
+	background-color: #56C1FF;
+	cursor: pointer;
+}
+
+#navMenu a {
+	color: white;
+	text-decoration: none;
+}

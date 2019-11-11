@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<title>QuizOn!</title>
+		<meta charset="UTF-8"/>
+		<link rel="stylesheet" type="text/css" href="./css/main.css">
+		<link rel="stylesheet" type="text/css" href="./css/create.css">
+	</head>
+
+	<body>
+		<header>
+			<h1>QuizOn!</h1>
+		</header>
+
+		<ul id="navMenu">
+			<li><a href="./index.html">Home</a></li>
+			<li><a href="./explore.html">Explore</a></li>
+			<li class="selected"><a href="./create.html">Create</a></li>
+			<li><a href="./login.html">Log-in</a></li>
+		</ul>
+
+		<div id="quizHeader">
+			<div>
+				<label for="quizTitle">Title:</label>
+				<input type="text" name="quizTitle" id="quizTitle"/>
+			</div>
+			<div>
+				<label for="quizTags">Tags:</label>
+				<input type="text" placeholder="Type the tags separated by commas" id="quizTags">
+			</div>
+			<label>By USER</label>
+		</div>
+
+		<div id="questionList">
+		</div>
+
+		<div id="questionCreator">
+			<button id="multipleChoice" class="questionTypeBtn">Multiple-choice</button>
+			<button id="multipleAnswer" class="questionTypeBtn">Multiple-answer</button>
+			<button id="openEnded" class="questionTypeBtn">Open-ended</button>
+			<button id="trueFalse" class="questionTypeBtn">True or False</button>
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script type="text/javascript" src="./js/create.js"></script>
+	</body>
+
+
+</html>

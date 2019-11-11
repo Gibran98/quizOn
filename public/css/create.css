@@ -1,0 +1,16 @@
+#quizHeader, #questionCreator {
+	background-color: #CCC;
+	padding: 20px;
+	margin: 20px;
+}
+
+.question {
+	border: 2px dashed #04A1FF;
+	margin: 10px 20px;
+	padding: 20px;
+}
+
+.questionSection {
+	margin: 10px;
+}
+
