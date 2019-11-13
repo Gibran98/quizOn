@@ -29,7 +29,20 @@ $("#saveQuizBtn").on("click", function(event) {
 		quizTitle,
 		user
 	}
-	console.log(quiz);
+	
+	$.ajax({
+			url: "/api/postQuiz",
+			data: JSON.stringify(quiz),
+			method: "POST",
+			dataType: "json",
+			contentType: "application/json",
+			success: function(responseJSON){
+				console.log("Successfully created quiz");
+			},
+			error: function(error){
+				console.log("Error: " + error);
+			}
+		});
 });
 
 function parseMultipleChoice(question) {
