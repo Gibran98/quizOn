@@ -12,8 +12,21 @@ let { QuizList } = require('./model');
 app.use(express.static('public'));
 app.use(morgan("dev"));
 
-app.post("/api/postQuiz", jsonParser, (req, res) => {
+app.get("/api/getQuizzes", (req, res, next) => {
+	QuizList.getAll()
+		.then(quizzes => {
+			return res.status(200).json(quizzes);
+		})
+		.catch(error => {
+			res.statusMessage = "Something went wrong with DB. Try again later.";
+			return res.status(500).json({
+				message: "Something went wrong with DB. Try again later.",
+				status: 500
+			})
+		});
+});
 
+app.post("/api/postQuiz", jsonParser, (req, res) => {
 	let newQuiz = req.body.quiz;
 
 	QuizList.post(newQuiz)
