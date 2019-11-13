@@ -32,7 +32,7 @@ $("#saveQuizBtn").on("click", function(event) {
 	
 	$.ajax({
 			url: "/api/postQuiz",
-			data: JSON.stringify(quiz),
+			data: JSON.stringify({quiz: quiz}),
 			method: "POST",
 			dataType: "json",
 			contentType: "application/json",
