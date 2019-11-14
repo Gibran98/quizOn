@@ -1,4 +1,6 @@
 $("#registerForm").on("submit", function(event) {
+	event.preventDefault();
+
 	let username = $("#userNameInputReg").val();
 	let password = $("#passwordInputReg").val();
 	let passwordConfirm = $("#passwordConfirmInputReg").val();
@@ -16,38 +18,45 @@ $("#registerForm").on("submit", function(event) {
 	}
 
 	$.ajax({
-		url: "/api/postUser",
+		url: "/api/register",
 		data: JSON.stringify({user: newUser}),
 		method: "POST",
 		dataType: "json",
 		contentType: "application/json",
 		success: function(responseJSON){
-			console.log("Successfully created user"); //TODO
+			$("#duplicateUserSpan").text("");
+			globalVars.globalUser = responseJSON.user;
 		},
 		error: function(error){
-			console.log("Error: " + error);
+			$("#duplicateUserSpan").text("User already exists, try again.");
 		}
 	});
 
 });
-/*
-TODO
+
 $("#loginForm").on("submit", function(event) {
-	let username = $("#userNameInputLogin").val();
-	let password = $("#passwordInputLogin").val();
+	event.preventDefault();
+
+	let newUser = {
+		username: $("#userNameInputLogin").val(),
+		password: $("#passwordInputLogin").val()
+	}
 
 	$.ajax({
-		url: "/api/getUserByName/" + username,
-		method: "GET",
+		url: "/api/login",
+		data: JSON.stringify({user: newUser}),
+		method: "POST",
 		dataType: "json",
+		contentType: "application/json",
 		success: function(responseJSON){
-			
+			$("#wrongPasswordSpan").text("");
+			//window.user = responseJSON.user.username;
+			console.log(JSON.stringify(responseJSON.user));
+			localStorage.setItem('globalUser', JSON.stringify(responseJSON.user));
 		},
 		error: function(error){
-			console.log("Error");
+			$("#wrongPasswordSpan").text("Password and user dont match")
 		}
 	});
-
-
-});*/
+});
 

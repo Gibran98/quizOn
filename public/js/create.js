@@ -1,50 +1,5 @@
 let questionCounterCreate = 1;
 
-$("#saveQuizBtn").on("click", function(event) {
-	event.preventDefault();
-
-	let quizTitle = $("#quizTitle").val();
-	let quizTags = $("#quizTags").val().split(",");
-	let quizQuestions = [];
-
-	let questions = $(".question");
-	for (let question of questions) {
-		//TODO: THEY SHOULD GO TO DB
-		if($(question).hasClass("multipleChoice")) 
-			quizQuestions.push(parseMultipleChoice(question));
-
-		else if($(question).hasClass("multipleAnswer")) 
-			quizQuestions.push(parseMultipleAnswer(question));
-
-		else if($(question).hasClass("openEnded"))
-			quizQuestions.push(parseOpenEnded(question));
-
-		else if($(question).hasClass("trueFalse"))
-			quizQuestions.push(parseTrueFalse(question));
-	}
-
-	let quiz = {
-		quizQuestions,
-		quizTags,
-		quizTitle,
-		user
-	}
-	
-	$.ajax({
-			url: "/api/postQuiz",
-			data: JSON.stringify({quiz: quiz}),
-			method: "POST",
-			dataType: "json",
-			contentType: "application/json",
-			success: function(responseJSON){
-				console.log("Successfully created quiz");
-			},
-			error: function(error){
-				console.log("Error: " + error);
-			}
-		});
-});
-
 function parseMultipleChoice(question) {
 	let questionTitle = $($(question).find(".questionTitle")[0]).val();
 	let choices = $(question).find(".choice");
@@ -113,6 +68,50 @@ function parseTrueFalse(question) {
 }
 
 function addButtonListeners() {
+	$("#saveQuizBtn").on("click", function(event) {
+		event.preventDefault();
+
+		let quizTitle = $("#quizTitle").val();
+		let quizTags = $("#quizTags").val().split(",");
+		let quizQuestions = [];
+
+		let questions = $(".question");
+		for (let question of questions) {
+			if($(question).hasClass("multipleChoice")) 
+				quizQuestions.push(parseMultipleChoice(question));
+
+			else if($(question).hasClass("multipleAnswer")) 
+				quizQuestions.push(parseMultipleAnswer(question));
+
+			else if($(question).hasClass("openEnded"))
+				quizQuestions.push(parseOpenEnded(question));
+
+			else if($(question).hasClass("trueFalse"))
+				quizQuestions.push(parseTrueFalse(question));
+		}
+
+		let quiz = {
+			quizQuestions,
+			quizTags,
+			quizTitle,
+			user: globalUser.username
+		}
+		
+		$.ajax({
+				url: "/api/postQuiz",
+				data: JSON.stringify({quiz: quiz}),
+				method: "POST",
+				dataType: "json",
+				contentType: "application/json",
+				success: function(responseJSON){
+					console.log("Successfully created quiz");
+				},
+				error: function(error){
+					console.log("Error: " + error);
+				}
+			});
+	});
+
 	$("#multipleChoiceBtn").on("click", function(event) {
 		event.preventDefault();
 
@@ -239,3 +238,5 @@ function addButtonListeners() {
 }
 
 addButtonListeners();
+console.log(JSON.parse(localStorage.getItem('globalUser')).username);
+// $("#quizUserName").text(globalUser.username);

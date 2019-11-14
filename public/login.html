@@ -33,6 +33,7 @@
 						<input type="password" name="passwordInput" id="passwordInputLogin"/>
 					</div>
 					<input type="submit" name="loginSubmitBtn" value="Log-in"/>
+					<span id="wrongPasswordSpan" class="error"></span>
 				</fieldset>
 			</form>
 			
@@ -46,18 +47,20 @@
 					</div>
 					<div>
 						<label for="passwordInput">Password: </label>
-						<input type="text" name="passwordInput" id="passwordInputReg"/>
+						<input type="password" name="passwordInput" id="passwordInputReg"/>
 					</div>
 					<div>
 						<label for="passwordConfirmInput">Confirm password: </label>
-						<input type="text" name="passwordConfirmInput" id="passwordConfirmInputReg"/>
+						<input type="password" name="passwordConfirmInput" id="passwordConfirmInputReg"/>
 					</div>
-					<input type="submit" name="registerSubmitBtn" value="Log-in"/>
+					<input type="submit" name="registerSubmitBtn" value="Register"/>
+					<span id="duplicateUserSpan" class="error"></span>
 				</fieldset>
 			</form>
 		</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script type="text/javascript" src="./js/global.js"></script>
 		<script type="text/javascript" src="./js/login.js"></script>
 	</body>
 

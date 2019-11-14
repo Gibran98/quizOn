@@ -5,4 +5,6 @@ const QuestionTypes = {
 	TRUE_FALSE: 4
 }
 
-let user = "Polnareff"; //TODO GET USER FROM DB
+var globalUser = localStorage.getItem('globalUser');
+
+//module.exports = {globalVars};

@@ -96,18 +96,96 @@ app.get("/api/getUserByName/:username", (req, res, next) => {
 		});
 });
 
-app.post("/api/postUser", jsonParser, (req, res) => {
-	let newUser = req.body.user;
+app.post("/api/login", jsonParser, (req, res, next) => {
+	let password = req.body.user.password;
+	let userName = req.body.user.username;
 
-	bcrypt.hash(newUser.password, function(error, hash) {
-		newUser.password = hash;
-		UserList.post(newUser)
-			.then(newUser => {
-				return res.status(201).json({
-					message: "User created successfully", 
-					status: 201, 
-					user : newUser
+	UserList.getUserByName(userName)
+		.then(user => {
+			if(!user) {
+				res.statusMessage = "User not found";
+				return res.status(404).json({
+					message: "User not found",
+					status: 404
 				});
+			}
+
+			bcrypt.compare(password, user.password, function(error, equal) {
+				if(error) {
+					res.statusMessage = "Something went wrong with the DB. Try again later.";
+					return res.status(500).json({
+						message: "Something went wrong with the DB. Try again later.",
+						status: 500
+					});
+				}
+
+				if(equal) {
+					return res.status(201).json({
+						message: "User logged-in successfully", 
+						status: 201, 
+						user: user
+					});
+				} else {
+					//return passwords dont match
+					res.statusMessage = "Passwords don't match, try again.";
+					return res.status(401).json({
+						message: "Passwords don't match, try again.",
+						status: 401
+					});
+				}
+			}) 
+		})
+		.catch(error => {
+			res.statusMessage = "Something went wrong with the DB. Try again later.";
+			return res.status(500).json({
+				message: "Something went wrong with the DB. Try again later.",
+				status: 500
+			});
+		});
+
+});
+
+app.post("/api/register", jsonParser, (req, res, next) => {
+	let userPassword = req.body.user.password;
+	let userName = req.body.user.username;
+
+	bcrypt.hash(userPassword, 10, function(error, hashedPassword) {
+		if(error) {
+			res.statusMessage = "Something went wrong with the DB. Try again later.";
+			return res.status(500).json({
+				message: "Something went wrong with the DB. Try again later.",
+				status: 500
+			});
+		}
+
+		let newUser = {username:userName, password:hashedPassword};
+
+		UserList.getUserByName(newUser.username)
+			.then(user => {
+				console.log(user);
+				if(!user) {
+					UserList.post(newUser)
+						.then(newUser => {
+							return res.status(201).json({
+								message: "User created successfully", 
+								status: 201, 
+								user : newUser
+							});
+						})
+						.catch(error => {
+							res.statusMessage = "Something went wrong with the DB. Try again later.";
+							return res.status(500).json({
+								message: "Something went wrong with the DB. Try again later.",
+								status: 500
+							});
+						});
+				} else {
+					return res.status(409).json({
+						message: "User already exists, try again", 
+						status: 409, 
+						user : user
+					});
+				}
 			})
 			.catch(error => {
 				res.statusMessage = "Something went wrong with the DB. Try again later.";
@@ -117,9 +195,8 @@ app.post("/api/postUser", jsonParser, (req, res) => {
 				});
 			});
 	});
-
-	
 });
+
 
 let server;
 function runServer(port, databaseUrl) { //function to run when the server starts
