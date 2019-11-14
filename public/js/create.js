@@ -1,4 +1,4 @@
-let questionCounter = 1;
+let questionCounterCreate = 1;
 
 $("#saveQuizBtn").on("click", function(event) {
 	event.preventDefault();
@@ -91,10 +91,10 @@ function parseMultipleAnswer(question) {
 
 function parseOpenEnded(question) {
 	let questionTitle = $($(question).find(".questionTitle")[0]).val();
-	let questionText = $($(question).find(".questionText")[0]).val();
+	let correctAns = $($(question).find(".questionText")[0]).val().toLowerCase();
 	return {
 		questionTitle,
-		questionText,
+		correctAns,
 		questionType: QuestionTypes.OPEN_ENDED
 	}
 }
@@ -124,19 +124,19 @@ function addButtonListeners() {
 				</div>
 				<div class="questionSection">
 					<div class="choice">
-						<input type="radio" name="questionChoice${questionCounter}" value="1" />
+						<input type="radio" name="questionChoice${questionCounterCreate}" value="1" />
 						<input type="text"/>
 					</div>
 					<div class="choice">
-						<input type="radio" name="questionChoice${questionCounter}" value="2" />
+						<input type="radio" name="questionChoice${questionCounterCreate}" value="2" />
 						<input type="text"/>
 					</div>
 					<div class="choice">
-						<input type="radio" name="questionChoice${questionCounter}" value="3" />
+						<input type="radio" name="questionChoice${questionCounterCreate}" value="3" />
 						<input type="text"/>
 					</div>
 					<div class="choice">
-						<input type="radio" name="questionChoice${questionCounter}" value="4" />
+						<input type="radio" name="questionChoice${questionCounterCreate}" value="4" />
 						<input type="text"/>
 					</div>
 				</div>
@@ -144,7 +144,7 @@ function addButtonListeners() {
 					<button class="questionDeleteBtn">Delete</button>
 				</div>
 			</div>`);
-		questionCounter++;
+		questionCounterCreate++;
 
 		let firstRadio = $("#questionList").children().last().children().eq(1).children().eq(0).children().eq(0);
 		$(firstRadio).prop("checked", true);
@@ -213,19 +213,19 @@ function addButtonListeners() {
 				</div>
 				<div class="questionSection">
 					<div class="choice">
-						<input type="radio" name="questionChoice${questionCounter}" value="1" id="true${questionCounter}">
-						<label for="true${questionCounter}">True</label>
+						<input type="radio" name="questionChoice${questionCounterCreate}" value="1" id="true${questionCounterCreate}">
+						<label for="true${questionCounterCreate}">True</label>
 					</div>
 					<div class="choice">
-						<input type="radio" name="questionChoice${questionCounter}" value="2" id="false${questionCounter}"/>
-						<label for="false${questionCounter}">False</label>
+						<input type="radio" name="questionChoice${questionCounterCreate}" value="2" id="false${questionCounterCreate}"/>
+						<label for="false${questionCounterCreate}">False</label>
 					</div>
 				</div>
 				<div class="questionSection">
 					<button class="questionDeleteBtn">Delete</button>
 				</div>
 			</div>`);
-		questionCounter++;
+		questionCounterCreate++;
 
 		let firstRadio = $("#questionList").children().last().children().eq(1).children().eq(0).children().eq(0);
 		$(firstRadio).prop("checked", true);

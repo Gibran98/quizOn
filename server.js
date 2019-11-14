@@ -3,11 +3,12 @@ let morgan = require("morgan");
 let bodyParser = require("body-parser");
 let app = express();
 let jsonParser = bodyParser.json();
+let bcrypt = require("bcrypt");
 const {DATABASE_URL, PORT} = require('./config')
 
 let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-let { QuizList } = require('./model');
+let { QuizList, UserList } = require('./model');
 
 app.use(express.static('public'));
 app.use(morgan("dev"));
@@ -44,6 +45,80 @@ app.post("/api/postQuiz", jsonParser, (req, res) => {
 				status: 500
 			});
 		});
+});
+
+app.get("/api/getQuizById/:id", (req, res, next) => {
+	QuizList.getQuizById(req.params.id)
+		.then(quiz => {
+			return res.status(200).json(quiz);
+		})
+		.catch(error => {
+			res.statusMessage = "Something went wrong with DB. Try again later.";
+			return res.status(500).json({
+				message: "Something went wrong with DB. Try again later.",
+				status: 500
+			})
+		});
+});
+
+app.get("/api/getUserById/:id", (req, res, next) => {
+	UserList.getUserById(req.params.id)
+		.then(user => {
+			return res.status(200).json(user);
+		})
+		.catch(error => {
+			res.statusMessage = "Something went wrong with DB. Try again later.";
+			return res.status(500).json({
+				message: "Something went wrong with DB. Try again later.",
+				status: 500
+			})
+		});
+});
+
+app.get("/api/getUserByName/:username", (req, res, next) => {
+	UserList.getUserByName(req.params.username)
+		.then(user => {
+			if(!user) {
+				res.statusMessage = "Username not found";
+				return res.status(404).json({
+					message: "Username not found",
+					status: 404
+				})
+			}
+			return res.status(200).json(user);
+		})
+		.catch(error => {
+			res.statusMessage = "Something went wrong with DB. Try again later.";
+			return res.status(500).json({
+				message: "Something went wrong with DB. Try again later.",
+				status: 500
+			})
+		});
+});
+
+app.post("/api/postUser", jsonParser, (req, res) => {
+	let newUser = req.body.user;
+
+	bcrypt.hash(newUser.password, function(error, hash) {
+		newUser.password = hash;
+		UserList.post(newUser)
+			.then(newUser => {
+				return res.status(201).json({
+					message: "User created successfully", 
+					status: 201, 
+					user : newUser
+				});
+			})
+			.catch(error => {
+				res.statusMessage = "Something went wrong with the DB. Try again later.";
+				return res.status(500).json({
+					message: "Something went wrong with the DB. Try again later.",
+					status: 500
+				});
+			});
+	});
+
+	
 });
 
 let server;

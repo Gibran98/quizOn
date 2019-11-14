@@ -5,7 +5,7 @@
 		<title>QuizOn!</title>
 		<meta charset="UTF-8"/>
 		<link rel="stylesheet" type="text/css" href="./css/main.css">
-
+		<link rel="stylesheet" type="text/css" href="./css/login.css">
 	</head>
 
 	<body>
@@ -20,7 +20,42 @@
 			<li class="selected"><a href="./login.html">Log-in</a></li>
 		</ul>
 
-		<p>Login</p>
+		<div id="loginRegisterDiv">
+			<form id="loginForm">
+				<fieldset>
+					<legend>Log-in</legend>
+					<div>
+						<label for="userNameInput">User: </label>
+						<input type="text" name="userNameInput" id="userNameInputLogin"/>
+					</div>
+					<div>
+						<label for="passwordInput">Password: </label>
+						<input type="password" name="passwordInput" id="passwordInputLogin"/>
+					</div>
+					<input type="submit" name="loginSubmitBtn" value="Log-in"/>
+				</fieldset>
+			</form>
+			
+			<form id="registerForm">
+				<fieldset>
+					<legend>Register</legend>
+					<div>
+						<span id="registerError" class="error"></span>
+						<label for="userNameInput">User: </label>
+						<input type="text" name="userNameInput" id="userNameInputReg"/>
+					</div>
+					<div>
+						<label for="passwordInput">Password: </label>
+						<input type="text" name="passwordInput" id="passwordInputReg"/>
+					</div>
+					<div>
+						<label for="passwordConfirmInput">Confirm password: </label>
+						<input type="text" name="passwordConfirmInput" id="passwordConfirmInputReg"/>
+					</div>
+					<input type="submit" name="registerSubmitBtn" value="Log-in"/>
+				</fieldset>
+			</form>
+		</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script type="text/javascript" src="./js/indexJQ.js"></script>
