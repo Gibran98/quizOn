@@ -42,15 +42,11 @@ h3 {
 #navMenu > li {
 	float: left;
 	padding: 10px 20px;
+	color: white;
 }
 
 #navMenu > li:hover, .selected {
 	color: white;
 	background-color: #56C1FF;
 	cursor: pointer;
-}
-
-#navMenu a {
-	color: white;
-	text-decoration: none;
 }

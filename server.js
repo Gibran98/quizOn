@@ -13,6 +13,10 @@ let { QuizList, UserList, AttemptList } = require('./model');
 app.use(express.static('public'));
 app.use(morgan("dev"));
 
+// ----------------------------------------------------------------------------
+// QUIZZES
+// ----------------------------------------------------------------------------
+
 app.get("/api/getQuizzes", (req, res, next) => {
 	QuizList.getAll()
 		.then(quizzes => {
@@ -74,6 +78,10 @@ app.get("/api/getRecentQuizzesByUser/:id", (req, res, next) => {
 			})
 		});
 });
+
+// ----------------------------------------------------------------------------
+// USERS
+// ----------------------------------------------------------------------------
 
 app.get("/api/getUserById/:id", (req, res, next) => {
 	UserList.getUserById(req.params.id)
@@ -211,10 +219,28 @@ app.post("/api/register", jsonParser, (req, res, next) => {
 	});
 });
 
+// ----------------------------------------------------------------------------
+// ATTEMPTS
+// ----------------------------------------------------------------------------
+
 app.get("/api/getRecentAttemptsByUser/:id", (req, res, next) => {
 	AttemptList.getRecentAttemptsByUser(req.params.id, 10) //TODO: INPUT FIELD PARA AJUSTAR LIMIT
 		.then(attempts => {
 			return res.status(200).json(attempts);
+		})
+		.catch(error => {
+			res.statusMessage = "Something went wrong with DB. Try again later.";
+			return res.status(500).json({
+				message: "Something went wrong with DB. Try again later.",
+				status: 500
+			})
+		});
+});
+
+app.get("/api/getAttemptById/:id", (req, res, next) => {
+	AttemptList.getAttemptsById(req.params.id)
+		.then(attempt => {
+			return res.status(200).json(attempt);
 		})
 		.catch(error => {
 			res.statusMessage = "Something went wrong with DB. Try again later.";
@@ -244,6 +270,10 @@ app.post("/api/postAttempt", jsonParser, (req, res) => {
 			});
 		});
 });
+
+// ----------------------------------------------------------------------------
+// SERVER
+// ----------------------------------------------------------------------------
 
 let server;
 function runServer(port, databaseUrl) { //function to run when the server starts

@@ -1,0 +1,17 @@
+.question {
+	border: 2px dashed #CCC;
+	margin: 10px 20px;
+	padding: 20px;
+}
+
+.questionSection {
+	margin: 10px;
+}
+
+.correct {
+	background-color: #56C56F35;
+}
+
+.incorrect {
+	background-color: #D9534F35;
+}

@@ -24,7 +24,8 @@ let attemptSchema = mongoose.Schema({
 	quizTitle: {type: String},
 	quizId: {type: mongoose.Schema.Types.ObjectId,
 			ref: 'Quiz'},
-	answers: {type: Array},
+	userAnswers: {type: Array},
+	gradedAnswers: {type: Array},
 	date: {type: Date}
 })
 
@@ -102,10 +103,10 @@ let UserList = {
 };
 
 let AttemptList = {
-	getAttemptsById: function(uId) {
-		return Attempt.find({user : uId})
-			.then(attempts => {
-				return attempts;
+	getAttemptsById: function(aId) {
+		return Attempt.findOne({_id : aId})
+			.then(attempt => {
+				return attempt;
 			})
 			.catch(error => {
 				throw Error(error);

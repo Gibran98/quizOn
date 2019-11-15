@@ -222,6 +222,11 @@ function gradeQuiz(quiz) {
 	let userAnswers = [];
 	let gradedAnswers = [];
 
+	$($(".submitQuizBtn")[0]).prop("disabled", true);
+	let inputs = $("#takeQuizSection input");
+	for (let input of inputs)
+		$(input).prop("disabled", true);
+
 	let questions = $(".question");
 	for (let question of questions) {
 		if($(question).hasClass("multipleChoice"))  {
@@ -242,7 +247,7 @@ function gradeQuiz(quiz) {
 		gradedAnswers.push(JSON.stringify(correctAnswers[i]) == JSON.stringify(userAnswers[i]));
 
 	let quizGrade = showQuizResults(gradedAnswers);
-	let attempt = {user: user._id, grade: quizGrade, quizTitle: quiz.quizTitle, quizId: quiz._id, answers: gradedAnswers, date: new Date()};
+	let attempt = {user: user._id, grade: quizGrade, quizTitle: quiz.quizTitle, quizId: quiz._id, userAnswers: userAnswers, gradedAnswers: gradedAnswers, date: new Date()};
 
 	if(user.password) {
 		$.ajax({
