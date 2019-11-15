@@ -34,6 +34,13 @@ $("#takeQuizSection").on("click", ".submitQuizBtn", function(event) {
 	});
 });
 
+$("#takeQuizSection").on("click", "#returnToListBtn", function(event) {
+	event.preventDefault();
+
+	$("#takeQuizSection").empty();
+	$("#takeQuizSection").hide();
+	$("#quizListSection").show();	
+});
 
 function loadAllQuizzes(){
 	$.ajax({
@@ -44,9 +51,10 @@ function loadAllQuizzes(){
 			$("#quizList").empty();
 
 			for (let quiz of responseJSON){
-				$("#quizList").append(`<li class=quiz>
+				$("#quizList").append(`<li class='quiz'>
 											<p><span>Title: </span> ${quiz.quizTitle}</p>
-											<p><span>Author: </span> ${quiz.user}</p>
+											<p><span>Author: </span> ${quiz.userName}</p>
+											<p><span>Tags: </span> ${quiz.quizTags.join(', ')}</p>
 											<button class='takeQuizBtn' id='${quiz._id}'>Take quiz!</button>
 									   </li>`);
 
@@ -78,6 +86,7 @@ function loadQuiz(quiz) {
 		}
 	}
 	$("#takeQuizSection").append(`<button class='submitQuizBtn' id='${quiz._id}'>Submit!</button>`);
+	$("#takeQuizSection").append(`<button id='returnToListBtn'>Return!</button>`);
 }
 
 function addMultipleChoiceQuestion(question) {
@@ -232,7 +241,24 @@ function gradeQuiz(quiz) {
 	for(let i=0; i<userAnswers.length; i++) 
 		gradedAnswers.push(JSON.stringify(correctAnswers[i]) == JSON.stringify(userAnswers[i]));
 
-	showQuizResults(gradedAnswers);
+	let quizGrade = showQuizResults(gradedAnswers);
+	let attempt = {user: user._id, grade: quizGrade, quizTitle: quiz.quizTitle, quizId: quiz._id, answers: gradedAnswers, date: new Date()};
+
+	if(user.password) {
+		$.ajax({
+			url: "/api/postAttempt",
+			data: JSON.stringify({attempt}),
+			method: "POST",
+			dataType: "json",
+			contentType: "application/json",
+			success: function(responseJSON){
+				console.log("Successfully created attempt");
+			},
+			error: function(error){
+				console.log("Error: " + error);
+			}
+		});
+	}
 }
 
 function showQuizResults(gradedAnswers) {
@@ -253,7 +279,7 @@ function showQuizResults(gradedAnswers) {
 	$("#takeQuizSection").append(`
 		<label>Results: ${correctCounter}/${gradedAnswers.length} (${(correctCounter/gradedAnswers.length*100).toFixed(2)}%)</label>
 		`);
-
+	return (correctCounter/gradedAnswers.length*100).toFixed(2);
 }
 
 loadAllQuizzes();

@@ -11,11 +11,24 @@ body {
 	color: #4F545F;
 }
 
-h1 {
+header {
+	display: flex;
+	justify-content: space-between;
+	background-color: #0576BB;
+}
+
+h1, h3 {
 	padding: 20px;
 	margin: 0;
 	color: white;
-	background-color: #0576BB;
+}
+
+/*h1 {
+	width: 80%;
+}*/
+
+h3 {
+	align-self: center;
 }
 
 #navMenu {

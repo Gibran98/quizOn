@@ -11,13 +11,14 @@
 	<body>
 		<header>
 			<h1>QuizOn!</h1>
+			<h3 id="userLabel">Guest</h3>
 		</header>
 
 		<ul id="navMenu">
-			<li><a href="./index.html">Home</a></li>
-			<li><a href="./explore.html">Explore</a></li>
-			<li><a href="./create.html">Create</a></li>
-			<li class="selected"><a href="./login.html">Log-in</a></li>
+			<li class="navLink" href="./index.html">Home</li>
+			<li class="navLink" href="./explore.html">Explore</li>
+			<li class="navLink" id="createLink"  href="./create.html">Create</a></li>
+			<li class="selected navLink" id="loginLink" href="./login.html">Log-in</a></li>
 		</ul>
 
 		<div id="loginRegisterDiv">
@@ -41,7 +42,6 @@
 				<fieldset>
 					<legend>Register</legend>
 					<div>
-						<span id="registerError" class="error"></span>
 						<label for="userNameInput">User: </label>
 						<input type="text" name="userNameInput" id="userNameInputReg"/>
 					</div>
@@ -54,14 +54,14 @@
 						<input type="password" name="passwordConfirmInput" id="passwordConfirmInputReg"/>
 					</div>
 					<input type="submit" name="registerSubmitBtn" value="Register"/>
-					<span id="duplicateUserSpan" class="error"></span>
+					<span id="registerError" class="error"></span>
 				</fieldset>
 			</form>
 		</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		<script type="text/javascript" src="./js/global.js"></script>
 		<script type="text/javascript" src="./js/login.js"></script>
+		<script type="text/javascript" src="./js/global.js"></script>
 	</body>
 
 

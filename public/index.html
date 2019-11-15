@@ -11,18 +11,38 @@
 	<body>
 		<header>
 			<h1>QuizOn!</h1>
+			<h3 id="userLabel">Guest</h3>
 		</header>
 
 		<ul id="navMenu">
-			<li class="selected"><a href="./index.html">Home</a></li>
-			<li><a href="./explore.html">Explore</a></li>
-			<li><a href="./create.html">Create</a></li>
-			<li><a href="./login.html">Log-in</a></li>
+			<li class="selected navLink" href="./index.html">Home</li>
+			<li class="navLink" href="./explore.html">Explore</li>
+			<li class="navLink" id="createLink"  href="./create.html">Create</a></li>
+			<li class="navLink" id="loginLink" href="./login.html">Log-in</a></li>
 		</ul>
 
-		<p>index</p>
+		<section id="guestSection">
+			<div>
+
+			</div>
+		</section>
+		<section id="userSection">
+			<div id="parentDiv">
+				<div>
+					<h4>My Attempts</h4>
+					<ul id="attemptList">
+					</ul>
+				</div>
+				<div>
+					<h4>My Quizzes</h4>
+					<ul id="quizList">
+					</ul>
+				</div>
+			</div>
+		</section>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script type="text/javascript" src="./js/global.js"></script>
 		<script type="text/javascript" src="./js/index.js"></script>
 	</body>
 

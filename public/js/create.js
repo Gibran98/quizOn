@@ -72,7 +72,7 @@ function addButtonListeners() {
 		event.preventDefault();
 
 		let quizTitle = $("#quizTitle").val();
-		let quizTags = $("#quizTags").val().split(",");
+		let quizTags = $("#quizTags").val().split(",").map(x => x.trim());
 		let quizQuestions = [];
 
 		let questions = $(".question");
@@ -91,10 +91,11 @@ function addButtonListeners() {
 		}
 
 		let quiz = {
+			user: user._id,
 			quizQuestions,
 			quizTags,
 			quizTitle,
-			user: globalUser.username
+			userName: user.username,
 		}
 		
 		$.ajax({
@@ -238,5 +239,5 @@ function addButtonListeners() {
 }
 
 addButtonListeners();
-console.log(JSON.parse(localStorage.getItem('globalUser')).username);
-// $("#quizUserName").text(globalUser.username);
+console.log();
+$("#quizUserName").text("By " + JSON.parse(localStorage.getItem('globalUser')).username);

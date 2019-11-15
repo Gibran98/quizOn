@@ -1,3 +1,5 @@
+localStorage.removeItem('globalUser');
+
 $("#registerForm").on("submit", function(event) {
 	event.preventDefault();
 
@@ -5,11 +7,15 @@ $("#registerForm").on("submit", function(event) {
 	let password = $("#passwordInputReg").val();
 	let passwordConfirm = $("#passwordConfirmInputReg").val();
 
-	if(username=="" || password=="" || passwordConfirm=="") 
+	if(username=="" || password=="" || passwordConfirm=="") {
 		$("#registerError").text("Please fill all the fields");
+		return;
+	}
 	
-	if(passwordConfirm !== password) 
+	if(passwordConfirm !== password) {
 		$("#registerError").text("Passwords don't match");
+		return;
+	}
 	
 
 	let newUser = {
@@ -24,11 +30,11 @@ $("#registerForm").on("submit", function(event) {
 		dataType: "json",
 		contentType: "application/json",
 		success: function(responseJSON){
-			$("#duplicateUserSpan").text("");
-			globalVars.globalUser = responseJSON.user;
+			localStorage.setItem('globalUser', JSON.stringify(responseJSON.user));
+			window.location = "/index.html";
 		},
 		error: function(error){
-			$("#duplicateUserSpan").text("User already exists, try again.");
+			$("#registerError").text("User already exists, try again.");
 		}
 	});
 
@@ -49,10 +55,8 @@ $("#loginForm").on("submit", function(event) {
 		dataType: "json",
 		contentType: "application/json",
 		success: function(responseJSON){
-			$("#wrongPasswordSpan").text("");
-			//window.user = responseJSON.user.username;
-			console.log(JSON.stringify(responseJSON.user));
 			localStorage.setItem('globalUser', JSON.stringify(responseJSON.user));
+			window.location = "/index.html";
 		},
 		error: function(error){
 			$("#wrongPasswordSpan").text("Password and user dont match")

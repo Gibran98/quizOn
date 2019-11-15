@@ -1,20 +1,34 @@
 let mongoose = require('mongoose'); //dependency to connect Node with Mongo
 mongoose.Promise = global.Promise; // 
 
-let quizSchema = mongoose.Schema({ //Schema is a meethod to build a schema, you pass in an object with the attributes the schema will have
-	quizQuestions : { type : Array }, //
-	quizTags : { type : Array },
-	quizTitle : { type : String },
-	user : { type : String }
-});
-
 let userSchema = mongoose.Schema({ //Schema is a meethod to build a schema, you pass in an object with the attributes the schema will have
 	username : { type : String }, //
 	password : { type : String }
 });
-
-let Quiz = mongoose.model('Quiz', quizSchema); //Model is a method to create a collection
 let User = mongoose.model('User', userSchema);
+
+let quizSchema = mongoose.Schema({ //Schema is a meethod to build a schema, you pass in an object with the attributes the schema will have
+	quizQuestions : { type : Array }, //
+	quizTags : { type : Array },
+	quizTitle : { type : String },
+	userName : { type : String },
+	user: {type: mongoose.Schema.Types.ObjectId,
+			ref: 'User'}
+});
+let Quiz = mongoose.model('Quiz', quizSchema); //Model is a method to create a collection
+
+let attemptSchema = mongoose.Schema({
+	user: {type: mongoose.Schema.Types.ObjectId,
+			ref: 'User'},
+	grade: {type: Number},
+	quizTitle: {type: String},
+	quizId: {type: mongoose.Schema.Types.ObjectId,
+			ref: 'Quiz'},
+	answers: {type: Array},
+	date: {type: Date}
+})
+
+let Attempt = mongoose.model('Attempt', attemptSchema);
 
 let QuizList = {
 	getAll: function(){
@@ -35,6 +49,15 @@ let QuizList = {
 				throw Error(error);
 			})
 	},
+	getRecentQuizzesByUser(uId, limit) {
+		return Quiz.find({user : uId}).sort({_id:-1}).limit(limit)
+			.then(attempts => {
+				return attempts;
+			})
+			.catch(error => {
+				throw Error(error);
+			})
+	},
 	post : function(newQuiz) {
 		return Quiz.create(newQuiz)
 			.then(quiz => {
@@ -44,7 +67,9 @@ let QuizList = {
 				throw Error(error);
 			})
 	}
-}
+};
+
+
 
 let UserList = {
 	getUserByName: function(uName) {
@@ -74,7 +99,37 @@ let UserList = {
 				throw Error(error);
 			});
 	}
-}
+};
 
-module.exports = {QuizList, UserList};
+let AttemptList = {
+	getAttemptsById: function(uId) {
+		return Attempt.find({user : uId})
+			.then(attempts => {
+				return attempts;
+			})
+			.catch(error => {
+				throw Error(error);
+			})
+	},
+	getRecentAttemptsByUser: function(uId, limit) {
+		return Attempt.find({user : uId}).sort({_id:-1}).limit(limit)
+			.then(attempts => {
+				return attempts;
+			})
+			.catch(error => {
+				throw Error(error);
+			})
+	},
+	post: function(newAttempt) {
+		return Attempt.create(newAttempt)
+			.then(attempt => {
+				return attempt;
+			})
+			.catch(error => {
+				throw Error(error);
+			})
+	}
+};
+
+module.exports = {QuizList, UserList, AttemptList};
 

@@ -8,7 +8,7 @@ const {DATABASE_URL, PORT} = require('./config')
 
 let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-let { QuizList, UserList } = require('./model');
+let { QuizList, UserList, AttemptList } = require('./model');
 
 app.use(express.static('public'));
 app.use(morgan("dev"));
@@ -51,6 +51,20 @@ app.get("/api/getQuizById/:id", (req, res, next) => {
 	QuizList.getQuizById(req.params.id)
 		.then(quiz => {
 			return res.status(200).json(quiz);
+		})
+		.catch(error => {
+			res.statusMessage = "Something went wrong with DB. Try again later.";
+			return res.status(500).json({
+				message: "Something went wrong with DB. Try again later.",
+				status: 500
+			})
+		});
+});
+
+app.get("/api/getRecentQuizzesByUser/:id", (req, res, next) => {
+	QuizList.getRecentQuizzesByUser(req.params.id, 10) //TODO: INPUT FIELD PARA AJUSTAR LIMIT
+		.then(quizzes => {
+			return res.status(200).json(quizzes);
 		})
 		.catch(error => {
 			res.statusMessage = "Something went wrong with DB. Try again later.";
@@ -197,6 +211,39 @@ app.post("/api/register", jsonParser, (req, res, next) => {
 	});
 });
 
+app.get("/api/getRecentAttemptsByUser/:id", (req, res, next) => {
+	AttemptList.getRecentAttemptsByUser(req.params.id, 10) //TODO: INPUT FIELD PARA AJUSTAR LIMIT
+		.then(attempts => {
+			return res.status(200).json(attempts);
+		})
+		.catch(error => {
+			res.statusMessage = "Something went wrong with DB. Try again later.";
+			return res.status(500).json({
+				message: "Something went wrong with DB. Try again later.",
+				status: 500
+			})
+		});
+});
+
+app.post("/api/postAttempt", jsonParser, (req, res) => {
+	let newAttempt = req.body.attempt;
+
+	AttemptList.post(newAttempt)
+		.then(newAttempt => {
+			return res.status(201).json({
+				message: "Attempt added to the list", 
+				status: 201, 
+				attempt : newAttempt
+			});
+		})
+		.catch(error => {
+			res.statusMessage = "Something went wrong with the DB. Try again later.";
+			return res.status(500).json({
+				message: "Something went wrong with the DB. Try again later.",
+				status: 500
+			});
+		});
+});
 
 let server;
 function runServer(port, databaseUrl) { //function to run when the server starts

@@ -5,6 +5,33 @@ const QuestionTypes = {
 	TRUE_FALSE: 4
 }
 
-var globalUser = localStorage.getItem('globalUser');
+let user;
+function setUp() {
+	setUsername();
+	setNavMenu();
 
-//module.exports = {globalVars};
+}
+
+function setUsername() {
+	user = JSON.parse(localStorage.getItem('globalUser')) || {username: "Guest"};
+	$("#userLabel").text(user.username);
+}
+
+function setNavMenu() {
+	if(!user.password) {
+		$("#loginLink").text("Log-in");
+		$("#createLink").hide();
+	} else {
+		$("#loginLink").text("Log-out");
+		$("#createLink").show();
+	}
+
+	$(".navLink").on("click", function(event) {
+		event.preventDefault();
+		console.log($(this).attr('href'));
+		window.location = $(this).attr('href');
+	})
+
+}
+
+setUp();
