@@ -126,7 +126,7 @@ function addButtonListeners(){
 		let quizId = event.target.id;
 
 		let quizTitle = $("#quizTitle").val();
-		let quizTags = $("#quizTags").val().split(",").map(x => x.trim());
+		let quizTags = $("#quizTags").val().split(",").map(x => x.trim().toLowerCase());
 		let quizQuestions = [];
 
 		let questions = $(".question");

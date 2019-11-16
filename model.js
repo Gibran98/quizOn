@@ -41,6 +41,24 @@ let QuizList = {
 				throw Error(error);
 			})
 	},
+	getByTitle: function(qTitle){
+		return Quiz.find({quizTitle: qTitle})
+			.then(quizzes => {
+				return quizzes;
+			})
+			.catch(error => {
+				throw Error(error);
+			})
+	},
+	getByTags: function(qTags){
+		return Quiz.find({quizTags: {$all: qTags}})
+			.then(quizzes => {
+				return quizzes;
+			})
+			.catch(error => {
+				throw Error(error);
+			})
+	},
 	getQuizById: function(qId) {
 		return Quiz.findOne({_id : qId})
 			.then(quiz => {

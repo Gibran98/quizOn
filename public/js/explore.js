@@ -17,6 +17,23 @@ $("#quizList").on("click", ".takeQuizBtn", function(event) {
 	});
 });
 
+
+$("#searchTitleBtn").on("click", function(event) {
+	event.preventDefault();
+	if ($("#searchBarTitle").val() == "")
+		loadAllQuizzes();
+	else
+		loadQuizzesByTitle();
+});
+
+$("#searchTagsBtn").on("click", function(event) {
+	event.preventDefault();
+	if ($("#searchBarTags").val() == "")
+		loadAllQuizzes();
+	else
+		loadQuizzesByTags();
+});
+
 $("#takeQuizSection").on("click", ".submitQuizBtn", function(event) {
 	event.preventDefault();
 
@@ -47,6 +64,56 @@ function loadAllQuizzes(){
 		url: "/api/getQuizzes",
 		method: "GET",
 		dataType: "json",
+		success: function(responseJSON){
+			$("#quizList").empty();
+
+			for (let quiz of responseJSON){
+				$("#quizList").append(`<li class='quiz'>
+											<p><span>Title: </span> ${quiz.quizTitle}</p>
+											<p><span>Author: </span> ${quiz.userName}</p>
+											<p><span>Tags: </span> ${quiz.quizTags.join(', ')}</p>
+											<button class='takeQuizBtn' id='${quiz._id}'>Take quiz!</button>
+									   </li>`);
+
+			}
+		},
+		error: function(error){
+			console.log("Error");
+		}
+	});
+}
+
+function loadQuizzesByTitle(){
+	$.ajax({
+		url: "/api/getQuizzesByTitle/" + $("#searchBarTitle").val(),
+		method: "GET",
+		dataType: "json",
+		success: function(responseJSON){
+			$("#quizList").empty();
+
+			for (let quiz of responseJSON){
+				$("#quizList").append(`<li class='quiz'>
+											<p><span>Title: </span> ${quiz.quizTitle}</p>
+											<p><span>Author: </span> ${quiz.userName}</p>
+											<p><span>Tags: </span> ${quiz.quizTags.join(', ')}</p>
+											<button class='takeQuizBtn' id='${quiz._id}'>Take quiz!</button>
+									   </li>`);
+
+			}
+		},
+		error: function(error){
+			console.log("Error");
+		}
+	});
+}
+
+function loadQuizzesByTags(){
+	$.ajax({
+		url: "/api/getQuizzesByTags/",
+		data: JSON.stringify({tags: $("#searchBarTags").val().split(",").map(x => x.trim().toLowerCase())}),
+		method: "POST",
+		dataType: "json",
+		contentType: "application/json",
 		success: function(responseJSON){
 			$("#quizList").empty();
 

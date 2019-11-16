@@ -31,6 +31,34 @@ app.get("/api/getQuizzes", (req, res, next) => {
 		});
 });
 
+app.get("/api/getQuizzesByTitle/:title", (req, res, next) => {
+	QuizList.getByTitle(req.params.title)
+		.then(quizzes => {
+			return res.status(200).json(quizzes);
+		})
+		.catch(error => {
+			res.statusMessage = "Something went wrong with DB. Try again later.";
+			return res.status(500).json({
+				message: "Something went wrong with DB. Try again later.",
+				status: 500
+			})
+		});
+});
+
+app.post("/api/getQuizzesByTags", jsonParser, (req, res, next) => {
+	QuizList.getByTags(req.body.tags)
+		.then(quizzes => {
+			return res.status(200).json(quizzes);
+		})
+		.catch(error => {
+			res.statusMessage = "Something went wrong with DB. Try again later.";
+			return res.status(500).json({
+				message: "Something went wrong with DB. Try again later.",
+				status: 500
+			})
+		});
+});
+
 app.post("/api/postQuiz", jsonParser, (req, res) => {
 	let newQuiz = req.body.quiz;
 
