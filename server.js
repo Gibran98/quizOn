@@ -79,6 +79,22 @@ app.get("/api/getRecentQuizzesByUser/:id", (req, res, next) => {
 		});
 });
 
+app.put("/api/updateQuiz/", jsonParser, (req, res, next) => {
+	let updatedQuiz = req.body.quiz;
+
+	QuizList.update(updatedQuiz)
+		.then(quiz => {
+			return res.status(200).json(quiz);
+		})
+		.catch(error => {
+			res.statusMessage = "Something went wrong with DB. Try again later.";
+			return res.status(500).json({
+				message: "Something went wrong with DB. Try again later.",
+				status: 500
+			})
+		});
+});
+
 // ----------------------------------------------------------------------------
 // USERS
 // ----------------------------------------------------------------------------

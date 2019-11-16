@@ -41,6 +41,30 @@
 
 		<section id="attemptSection"></section>
 
+		<section id="editQuizSection">
+			<div id="quizHeader">
+				<div>
+					<label for="quizTitle">Title:</label>
+					<input type="text" name="quizTitle" id="quizTitle"/>
+				</div>
+				<div>
+					<label for="quizTags">Tags:</label>
+					<input type="text" placeholder="Type the tags separated by commas" id="quizTags">
+				</div>
+				<label id="quizUserName"></label>
+			</div>
+
+			<ul id="quizEditList"></ul>
+			
+			<div id="questionCreator">
+				<button id="multipleChoiceBtn" class="questionTypeBtn">Multiple-choice</button>
+				<button id="multipleAnswerBtn" class="questionTypeBtn">Multiple-answer</button>
+				<button id="openEndedBtn" class="questionTypeBtn">Open-ended</button>
+				<button id="trueFalseBtn" class="questionTypeBtn">True or False</button>
+			</div>
+
+		</section>
+
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script type="text/javascript" src="./js/global.js"></script>
 		<script type="text/javascript" src="./js/index.js"></script>

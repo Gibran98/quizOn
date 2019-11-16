@@ -67,7 +67,16 @@ let QuizList = {
 			.catch(error => {
 				throw Error(error);
 			})
-	}
+	},
+	update : function(updatedQuiz){
+		return Quiz.replaceOne({_id: updatedQuiz._id}, updatedQuiz, {returnNewDocument: true})
+			.then(quiz => {
+				return quiz;
+			})
+			.catch(error => {
+				throw Error(error);
+			});
+	},
 };
 
 
