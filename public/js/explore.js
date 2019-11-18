@@ -136,6 +136,7 @@ function loadQuizzesByTags(){
 function loadQuiz(quiz) {
 	questionCounterExplore = 1;
 	$("#quizListSection").hide();
+	$("#takeQuizSection").show();
 
 	$("#takeQuizSection").append(`<h2>${quiz.quizTitle}</h2>`);
 	for(let question of quiz.quizQuestions) {
