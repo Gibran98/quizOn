@@ -6,3 +6,23 @@
 	width: 50%;
 	margin: 20px;
 }
+
+legend {
+	font-weight: bold;
+	font-size: 20px;
+	padding: 0 8px;
+	color: #04A1FF;
+}
+
+fieldset {
+	padding: 20px;
+	height: 100%;
+	display: flex;
+}
+
+#loginDiv, #registerDiv {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-self: center;
+}

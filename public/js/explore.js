@@ -69,12 +69,11 @@ function loadAllQuizzes(){
 
 			for (let quiz of responseJSON){
 				$("#quizList").append(`<li class='quiz'>
-											<p><span>Title: </span> ${quiz.quizTitle}</p>
-											<p><span>Author: </span> ${quiz.userName}</p>
-											<p><span>Tags: </span> ${quiz.quizTags.join(', ')}</p>
-											<button class='takeQuizBtn' id='${quiz._id}'>Take quiz!</button>
-									   </li>`);
-
+											<h4>${quiz.quizTitle}</h4>
+											<p><span>By: </span> ${quiz.userName}</p>
+											<p><span>Tags: </span><span class="tag"> ${quiz.quizTags.join('</span><span class="tag">')}</span></p>
+											<button class='takeQuizBtn waves-effect waves-light btn' id='${quiz._id}'>Take quiz!</button>
+									   </li>`); 
 			}
 		},
 		error: function(error){
@@ -93,10 +92,10 @@ function loadQuizzesByTitle(){
 
 			for (let quiz of responseJSON){
 				$("#quizList").append(`<li class='quiz'>
-											<p><span>Title: </span> ${quiz.quizTitle}</p>
-											<p><span>Author: </span> ${quiz.userName}</p>
-											<p><span>Tags: </span> ${quiz.quizTags.join(', ')}</p>
-											<button class='takeQuizBtn' id='${quiz._id}'>Take quiz!</button>
+											<h4>${quiz.quizTitle}</h4>
+											<p><span>By: </span> ${quiz.userName}</p>
+											<p><span>Tags: </span><span class="tag"> ${quiz.quizTags.join('</span><span class="tag">')}</span></p>
+											<button class='takeQuizBtn waves-effect waves-light btn' id='${quiz._id}'>Take quiz!</button>
 									   </li>`);
 
 			}
@@ -119,10 +118,10 @@ function loadQuizzesByTags(){
 
 			for (let quiz of responseJSON){
 				$("#quizList").append(`<li class='quiz'>
-											<p><span>Title: </span> ${quiz.quizTitle}</p>
-											<p><span>Author: </span> ${quiz.userName}</p>
-											<p><span>Tags: </span> ${quiz.quizTags.join(', ')}</p>
-											<button class='takeQuizBtn' id='${quiz._id}'>Take quiz!</button>
+											<h4>${quiz.quizTitle}</h4>
+											<p><span>By: </span> ${quiz.userName}</p>
+											<p><span>Tags: </span><span class="tag"> ${quiz.quizTags.join('</span><span class="tag">')}</span></p>
+											<button class='takeQuizBtn waves-effect waves-light btn' id='${quiz._id}'>Take quiz!</button>
 									   </li>`);
 
 			}
@@ -153,8 +152,8 @@ function loadQuiz(quiz) {
 			addTrueFalseQuestion(question);
 		}
 	}
-	$("#takeQuizSection").append(`<button class='submitQuizBtn' id='${quiz._id}'>Submit!</button>`);
-	$("#takeQuizSection").append(`<button id='returnToListBtn'>Return!</button>`);
+	$("#takeQuizSection").append(`<button class='submitQuizBtn waves-effect waves-light btn greenBtn' id='${quiz._id}'>Submit!</button>`);
+	$("#takeQuizSection").append(`<button id='returnToListBtn' class="waves-effect waves-light btn redBtn">Return!</button>`);
 }
 
 function addMultipleChoiceQuestion(question) {

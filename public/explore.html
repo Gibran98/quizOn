@@ -4,6 +4,7 @@
 	<head>
 		<title>QuizOn!</title>
 		<meta charset="UTF-8"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 		<link rel="stylesheet" type="text/css" href="./css/main.css">
 		<link rel="stylesheet" type="text/css" href="./css/explore.css">
 	</head>
@@ -21,15 +22,25 @@
 			<li class="navLink" id="loginLink" href="./login.html">Log-in</a></li>
 		</ul>
 
-		<div id="searchBars">
-			<input type="text" placeholder="Search by title..." id="searchBarTitle"/>
-			<input type="submit" id="searchTitleBtn" value="Search by title!"/>
-
-			<input type="text" placeholder="Search by tags..." id="searchBarTags"/>
-			<input type="submit" id="searchTagsBtn" value="Search by tags!"/>
-		</div>
-
 		<section id="quizListSection">
+			<div id="searchBars">
+				<div id="searchTitleDiv">
+					<div class="searchBar">
+						<label>Search by Title</label>
+						<input type="text" placeholder="Title goes here" id="searchBarTitle"/>
+					</div>
+					<input type="submit" class="waves-effect waves-light btn" id="searchTitleBtn" value="Go!"/>
+				</div>
+
+				<div id="searchTagsDiv">
+					<div class="searchBar">
+						<label>Search by Tags</label>
+						<input type="text" placeholder="Separate tags by commas" id="searchBarTags"/>
+					</div>
+					<input type="submit" class="waves-effect waves-light btn" id="searchTagsBtn" value="Go!"/>
+				</div>
+			</div>
+
 			<ul id="quizList"></ul>
 		</section>
 		<section id="takeQuizSection">

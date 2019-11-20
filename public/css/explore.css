@@ -1,4 +1,4 @@
-.question {
+.question, .quiz {
 	border: 2px dashed #CCC;
 	margin: 10px 20px;
 	padding: 20px;
@@ -14,4 +14,40 @@
 
 .incorrect {
 	background-color: #D9534F35;
+}
+
+#searchTitleDiv, #searchTagsDiv {
+	display: flex;
+	margin: 20px;
+	width: 100%;	
+}
+
+#searchTitleBtn, #searchTagsBtn {
+	margin: 8px;
+	width: 10%;
+}
+
+.searchBar {
+	width: 85%;
+}
+
+.tag {
+	margin: 5px;
+	padding: 5px;
+	background-color: #AAA;
+	color: white;
+	border-radius: 5px;
+}
+
+.greenBtn {
+	margin: 10px 10px 10px 20px;
+
+}
+
+h2 {
+	margin-left: 20px;
+}
+
+.redBtn {
+	margin: 10px;
 }

@@ -50,3 +50,38 @@ h3 {
 	background-color: #56C1FF;
 	cursor: pointer;
 }
+
+input:focus {
+    border-bottom: 1px solid #04A1FF !important;
+    box-shadow: 0 1px 0 0 #04A1FF !important;
+}
+
+[type="radio"]:checked, [type="radio"]:not(:checked), [type="checkbox"]:checked, [type="checkbox"]:not(:checked) {
+    position: static;
+    opacity: 1;
+    pointer-events: all;
+}
+
+.btn, .btn:focus {
+	background-color: #04A1FF;
+}
+
+.btn:hover {
+	background-color: #56C1FF;
+}
+
+.redBtn, .redBtn:focus {
+	background-color: #f44336;
+}
+
+.redBtn:hover {
+	background-color: #aa1409;
+}
+
+.greenBtn, .greenBtn:focus {
+	background-color: #4caf50;
+}
+
+.greenBtn:hover {
+	background-color: #367c39;
+}

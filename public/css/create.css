@@ -1,11 +1,11 @@
 #quizHeader, #questionCreator {
-	background-color: #CCC;
+	background-color: #f5f5f5;
 	padding: 20px;
 	margin: 20px;
 }
 
 .question {
-	border: 2px dashed #04A1FF;
+	border: 2px dashed #CCC;
 	margin: 10px 20px;
 	padding: 20px;
 }
@@ -14,3 +14,17 @@
 	margin: 10px;
 }
 
+label {
+	color: #4A4A4A;
+}
+
+.choiceText {
+    margin: 5px;
+    width: 50%;
+    height: 30px;
+    padding: 8px;
+}
+
+#saveQuizBtn {
+	margin: 0 20px 20px 20px;
+}

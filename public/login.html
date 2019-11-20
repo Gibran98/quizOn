@@ -4,6 +4,7 @@
 	<head>
 		<title>QuizOn!</title>
 		<meta charset="UTF-8"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 		<link rel="stylesheet" type="text/css" href="./css/main.css">
 		<link rel="stylesheet" type="text/css" href="./css/login.css">
 	</head>
@@ -25,36 +26,40 @@
 			<form id="loginForm">
 				<fieldset>
 					<legend>Log-in</legend>
-					<div>
-						<label for="userNameInput">User: </label>
-						<input type="text" name="userNameInput" id="userNameInputLogin"/>
+					<div id="loginDiv">
+						<div>
+							<label for="userNameInput">User: </label>
+							<input type="text" name="userNameInput" id="userNameInputLogin"/>
+						</div>
+						<div>
+							<label for="passwordInput">Password: </label>
+							<input type="password" name="passwordInput" id="passwordInputLogin"/>
+						</div>
+						<input type="submit" name="loginSubmitBtn" class="waves-effect waves-light btn" value="Log-in"/>
+						<span id="wrongPasswordSpan" class="error"></span>
 					</div>
-					<div>
-						<label for="passwordInput">Password: </label>
-						<input type="password" name="passwordInput" id="passwordInputLogin"/>
-					</div>
-					<input type="submit" name="loginSubmitBtn" value="Log-in"/>
-					<span id="wrongPasswordSpan" class="error"></span>
 				</fieldset>
 			</form>
 			
 			<form id="registerForm">
 				<fieldset>
 					<legend>Register</legend>
-					<div>
-						<label for="userNameInput">User: </label>
-						<input type="text" name="userNameInput" id="userNameInputReg"/>
+					<div id="registerDiv">
+						<div>
+							<label for="userNameInput">User: </label>
+							<input type="text" name="userNameInput" id="userNameInputReg"/>
+						</div>
+						<div>
+							<label for="passwordInput">Password: </label>
+							<input type="password" name="passwordInput" id="passwordInputReg"/>
+						</div>
+						<div>
+							<label for="passwordConfirmInput">Confirm password: </label>
+							<input type="password" name="passwordConfirmInput" id="passwordConfirmInputReg"/>
+						</div>
+						<input type="submit" name="registerSubmitBtn" class="waves-effect waves-light btn" 	value="Register"/>
+						<span id="registerError" class="error"></span>
 					</div>
-					<div>
-						<label for="passwordInput">Password: </label>
-						<input type="password" name="passwordInput" id="passwordInputReg"/>
-					</div>
-					<div>
-						<label for="passwordConfirmInput">Confirm password: </label>
-						<input type="password" name="passwordConfirmInput" id="passwordConfirmInputReg"/>
-					</div>
-					<input type="submit" name="registerSubmitBtn" value="Register"/>
-					<span id="registerError" class="error"></span>
 				</fieldset>
 			</form>
 		</div>

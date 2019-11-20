@@ -4,13 +4,15 @@
 	<head>
 		<title>QuizOn!</title>
 		<meta charset="UTF-8"/>
-		<link rel="stylesheet" type="text/css" href="./css/main.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 		<link rel="stylesheet" type="text/css" href="./css/create.css">
+		<link rel="stylesheet" type="text/css" href="./css/main.css">
+		
 	</head>
 
 	<body>
 		<header>
-			<h1>QuizOn!</h1>
+			<h1 class="test">QuizOn!</h1>
 			<h3 id="userLabel">Guest</h3>
 		</header>
 
@@ -37,13 +39,13 @@
 		</div>
 
 		<div id="questionCreator">
-			<button id="multipleChoiceBtn" class="questionTypeBtn">Multiple-choice</button>
-			<button id="multipleAnswerBtn" class="questionTypeBtn">Multiple-answer</button>
-			<button id="openEndedBtn" class="questionTypeBtn">Open-ended</button>
-			<button id="trueFalseBtn" class="questionTypeBtn">True or False</button>
+			<button id="multipleChoiceBtn" class="questionTypeBtn waves-effect waves-light btn">Multiple-choice</button>
+			<button id="multipleAnswerBtn" class="questionTypeBtn waves-effect waves-light btn">Multiple-answer</button>
+			<button id="openEndedBtn" class="questionTypeBtn waves-effect waves-light btn">Open-ended</button>
+			<button id="trueFalseBtn" class="questionTypeBtn waves-effect waves-light btn">True or False</button>
 		</div>
 
-		<button id="saveQuizBtn">Save quiz!</button>
+		<button id="saveQuizBtn" class="waves-effect waves-light btn greenBtn">Save quiz!</button>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script type="text/javascript" src="./js/global.js"></script>

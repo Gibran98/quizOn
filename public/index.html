@@ -4,9 +4,9 @@
 	<head>
 		<title>QuizOn!</title>
 		<meta charset="UTF-8"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 		<link rel="stylesheet" type="text/css" href="./css/main.css">
 		<link rel="stylesheet" type="text/css" href="./css/index.css">
-
 	</head>
 
 	<body>
@@ -22,17 +22,24 @@
 			<li class="navLink" id="loginLink" href="./login.html">Log-in</a></li>
 		</ul>
 
-		<section id="guestSection"></section>
+		<section id="guestSection">
+			<div id="imgDiv">
+				<img alt="guestImgLogo" src="./assets/guestLogo.jpeg" id="guestImg" class="center-align" />
+				<button id="guestLoginBtn" class="center-align waves-effect waves-light btn">Register!</button>
+			</div>
+
+
+		</section>
 
 		<section id="userSection">
 			<div id="parentDiv">
 				<div>
-					<h4>My Attempts</h4>
+					<h5>My Attempts</h5>
 					<ul id="attemptList">
 					</ul>
 				</div>
 				<div>
-					<h4>My Quizzes</h4>
+					<h5>My Quizzes</h5>
 					<ul id="quizList">
 					</ul>
 				</div>
@@ -54,18 +61,19 @@
 				<label id="quizUserName"></label>
 			</div>
 
-			<ul id="quizEditList"></ul>
+			<div id="quizEditList"></div>
 			
 			<div id="questionCreator">
-				<button id="multipleChoiceBtn" class="questionTypeBtn">Multiple-choice</button>
-				<button id="multipleAnswerBtn" class="questionTypeBtn">Multiple-answer</button>
-				<button id="openEndedBtn" class="questionTypeBtn">Open-ended</button>
-				<button id="trueFalseBtn" class="questionTypeBtn">True or False</button>
+				<button id="multipleChoiceBtn" class="questionTypeBtn waves-effect waves-light btn">Multiple-choice</button>
+				<button id="multipleAnswerBtn" class="questionTypeBtn waves-effect waves-light btn">Multiple-answer</button>
+				<button id="openEndedBtn" class="questionTypeBtn waves-effect waves-light btn">Open-ended</button>
+				<button id="trueFalseBtn" class="questionTypeBtn waves-effect waves-light btn">True or False</button>
 			</div>
 
 		</section>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 		<script type="text/javascript" src="./js/global.js"></script>
 		<script type="text/javascript" src="./js/index.js"></script>
 	</body>

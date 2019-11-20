@@ -8,9 +8,9 @@ function loadMyQuizzes() {
 		success: function(responseJSON){
 			for(let quiz of responseJSON) {
 			$("#quizList").append(`<li class='quiz'>
-											<p><span>Title: </span> ${quiz.quizTitle}</p>
-											<p><span>Tags: </span> ${quiz.quizTags.join(', ')}</p>
-											<button class='editQuizBtn' id='${quiz._id}'>Edit</button>
+											<h4>${quiz.quizTitle}</h4>
+											<p><span>Tags: </span><span class="tag"> ${quiz.quizTags.join('</span><span class="tag">')}</span></p>
+											<button class='editQuizBtn waves-effect waves-light btn' id='${quiz._id}'>Edit</button>
 									   </li>`);
 			}
 		},
@@ -27,11 +27,21 @@ function loadAttempts() {
 		dataType: "json",
 		success: function(responseJSON){
 			for(let attempt of responseJSON) {
-			$("#attemptList").append(`<li class='attempt'>
-											<p><span>Title: </span> ${attempt.quizTitle}</p>
-											<p><span>Grade: </span> ${attempt.grade}</p>
-											<button class='seeAttemptBtn' id='${attempt._id}'>See Attempt</button>
-									   </li>`);
+				var gradeClass = "";
+				if(attempt.grade >= 75)
+					gradeClass = "grade75";
+				else if(attempt.grade >= 50)
+					gradeClass = "grade50";
+				else if(attempt.grade >= 25)
+					gradeClass = "grade25";
+				else
+					gradeClass = "grade0";
+
+				$("#attemptList").append(`<li class='attempt'>
+												<h4>${attempt.quizTitle}</h4>
+												<p>Grade: <span class="grade ${gradeClass}">${attempt.grade}</span></p>
+												<button class='seeAttemptBtn waves-effect waves-light btn' id='${attempt._id}'>See Attempt</button>
+										   </li>`);
 			}
 		},
 		error: function(error){
@@ -64,6 +74,12 @@ function loadHomePage() {
 }
 
 function addButtonListeners(){
+	$("#quizEditList").on("click", ".questionDeleteBtn", function(event) {
+		event.preventDefault();
+
+		$(this).parent().parent().remove();
+	});
+
 	$("#attemptList").on("click", ".seeAttemptBtn", function(event) {
 		event.preventDefault();
 
@@ -160,6 +176,7 @@ function addButtonListeners(){
 				dataType: "json",
 				contentType: "application/json",
 				success: function(responseJSON){
+					window.location = "./index.html"
 					console.log("Successfully updated quiz");
 				},
 				error: function(error){
@@ -201,7 +218,7 @@ function loadAttempt(attempt, quiz){
 			showTrueFalseQuestion(question, attempt.userAnswers[questionCounterIndex-1], attempt.gradedAnswers[questionCounterIndex-1]);
 		}
 	}
-	$("#attemptSection").append(`<button id='returnToListBtn'>Return!</button>`);
+	$("#attemptSection").append(`<button id='returnToListBtn' class="waves-effect waves-light btn">Return!</button>`);
 }
 
 function showMultipleChoiceQuestion(question, answer, correct) {
@@ -334,8 +351,10 @@ function loadQuizEditor(quiz){
 			addTrueFalseEditable(question);
 		}
 	}
-	$("#editQuizSection").append(`<button class='submitQuizBtn' id='${quiz._id}'>Save changes!</button>`);
-	$("#editQuizSection").append(`<button class='cancelEditBtn'>Cancel!</button>`);
+	$("#editQuizSection").append(`<div class="saveCancelQuiz">
+									<button class='submitQuizBtn waves-effect waves-light btn greenBtn' id='${quiz._id}'>Save changes!</button>
+									<button class='cancelEditBtn waves-effect waves-light btn redBtn'>Cancel!</button>
+								</div>`);
 }
 
 function addMultipleChoiceEditable(question) {
@@ -350,23 +369,24 @@ function addMultipleChoiceEditable(question) {
 			<div class="questionSection">
 				<div class="choice">
 					<input type="radio" id="mc_${questionCounterIndex}_1" name="questionChoice${questionCounterIndex}" value="1" />
-					<input type="text" value="${question.choiceTexts[0]}"/>
+					<input type="text" class="browser-default choiceText" placeholder="Option 1" value="${question.choiceTexts[0]}"/>
 				</div>
 				<div class="choice">
 					<input type="radio" id="mc_${questionCounterIndex}_2" name="questionChoice${questionCounterIndex}" value="2" />
-					<input type="text" value="${question.choiceTexts[1]}"/>
+					<input type="text" class="browser-default choiceText" placeholder="Option 2" value="${question.choiceTexts[1]}"/>
+
 				</div>
 				<div class="choice">
 					<input type="radio" id="mc_${questionCounterIndex}_3" name="questionChoice${questionCounterIndex}" value="3" />
-					<input type="text" value="${question.choiceTexts[2]}"/>
+					<input type="text" class="browser-default choiceText" placeholder="Option 3" value="${question.choiceTexts[2]}"/>
 				</div>
 				<div class="choice">
 					<input type="radio" id="mc_${questionCounterIndex}_4" name="questionChoice${questionCounterIndex}" value="4" />
-					<input type="text" value="${question.choiceTexts[3]}"/>
+					<input type="text" class="browser-default choiceText" placeholder="Option 4" value="${question.choiceTexts[3]}"/>
 				</div>
 			</div>
 			<div class="questionSection">
-				<button class="questionDeleteBtn">Delete</button>
+				<button class="questionDeleteBtn waves-effect waves-light btn redBtn">Delete</button>
 			</div>
 		</div>`);
 	$(`#mc_${questionCounterIndex}_${question.correctAns}`).prop('checked', true);
@@ -385,23 +405,23 @@ function addMultipleAnswerEditable(question) {
 			<div class="questionSection">
 				<div class="choice">
 					<input type="checkbox" id="ma_${questionCounterIndex}_1" name="questionChoice${questionCounterIndex}" value="1" />
-					<input type="text" value="${question.choiceTexts[0]}"/>
+					<input type="text" class="browser-default choiceText" placeholder="Option 1" value="${question.choiceTexts[0]}"/>
 				</div>
 				<div class="choice">
 					<input type="checkbox" id="ma_${questionCounterIndex}_2" name="questionChoice${questionCounterIndex}" value="2" />
-					<input type="text" value="${question.choiceTexts[1]}"/>
+					<input type="text" class="browser-default choiceText" placeholder="Option 2" value="${question.choiceTexts[1]}"/>
 				</div>
 				<div class="choice">
 					<input type="checkbox" id="ma_${questionCounterIndex}_3" name="questionChoice${questionCounterIndex}" value="3" />
-					<input type="text" value="${question.choiceTexts[2]}"/>
+					<input type="text" class="browser-default choiceText" placeholder="Option 3" value="${question.choiceTexts[2]}"/>
 				</div>
 				<div class="choice">
 					<input type="checkbox" id="ma_${questionCounterIndex}_4" name="questionChoice${questionCounterIndex}" value="4" />
-					<input type="text" value="${question.choiceTexts[3]}"/>
+					<input type="text" class="browser-default choiceText" placeholder="Option 4" value="${question.choiceTexts[3]}"/>
 				</div>
 			</div>
 			<div class="questionSection">
-				<button class="questionDeleteBtn">Delete</button>
+				<button class="questionDeleteBtn waves-effect waves-light btn redBtn">Delete</button>
 			</div>
 		</div>`);
 	question.correctAns.forEach(answer => $(`#ma_${questionCounterIndex}_${answer}`).prop('checked', true));
@@ -421,7 +441,7 @@ function addOpenEndedEditable(question) {
 				<input type="text" class="questionText" value="${question.correctAns}"/>
 			</div>
 			<div class="questionSection">
-				<button class="questionDeleteBtn">Delete</button>
+				<button class="questionDeleteBtn waves-effect waves-light btn redBtn">Delete</button>
 			</div>
 		</div>`);
 
@@ -448,7 +468,7 @@ function addTrueFalseEditable(question) {
 				</div>
 			</div>
 			<div class="questionSection">
-				<button class="questionDeleteBtn">Delete</button>
+				<button class="questionDeleteBtn waves-effect waves-light btn redBtn">Delete</button>
 			</div>
 		</div>`);
 
@@ -469,23 +489,23 @@ function addQuestionListeners() {
 				<div class="questionSection">
 					<div class="choice">
 						<input type="radio" name="questionChoice${questionCounterIndex}" value="1" />
-						<input type="text"/>
+						<input type="text" class="browser-default choiceText" placeholder="Option 1"/>
 					</div>
 					<div class="choice">
 						<input type="radio" name="questionChoice${questionCounterIndex}" value="2" />
-						<input type="text"/>
+						<input type="text" class="browser-default choiceText" placeholder="Option 2"/>
 					</div>
 					<div class="choice">
 						<input type="radio" name="questionChoice${questionCounterIndex}" value="3" />
-						<input type="text"/>
+						<input type="text" class="browser-default choiceText" placeholder="Option 3"/>
 					</div>
 					<div class="choice">
 						<input type="radio" name="questionChoice${questionCounterIndex}" value="4" />
-						<input type="text"/>
+						<input type="text" class="browser-default choiceText" placeholder="Option 4"/>
 					</div>
 				</div>
 				<div class="questionSection">
-					<button class="questionDeleteBtn">Delete</button>
+					<button class="questionDeleteBtn waves-effect waves-light btn redBtn">Delete</button>
 				</div>
 			</div>`);
 		questionCounterIndex++;
@@ -507,23 +527,23 @@ function addQuestionListeners() {
 				<div class="questionSection">
 					<div class="choice">
 						<input type="checkbox" value="1" />
-						<input type="text"/>
+						<input type="text" class="browser-default choiceText" placeholder="Option 1"/>
 					</div>
 					<div class="choice">
 						<input type="checkbox" value="2" />
-						<input type="text"/>
+						<input type="text" class="browser-default choiceText" placeholder="Option 2"/>
 					</div>
 					<div class="choice">
 						<input type="checkbox" value="3" />
-						<input type="text"/>
+						<input type="text" class="browser-default choiceText" placeholder="Option 3"/>
 					</div>
 					<div class="choice">
 						<input type="checkbox" value="4" />
-						<input type="text"/>
+						<input type="text" class="browser-default choiceText" placeholder="Option 4"/>
 					</div>
 				</div>
 				<div class="questionSection">
-					<button class="questionDeleteBtn">Delete</button>
+					<button class="questionDeleteBtn waves-effect waves-light btn redBtn">Delete</button>
 				</div>
 			</div>`);
 	});
@@ -538,10 +558,10 @@ function addQuestionListeners() {
 					<input type="text" name="questionTitle" class="questionTitle"/>
 				</div>
 				<div class="questionSection">
-					<input type="text" class="questionText"/>
+					<input type="text" class="questionText browser-default choiceText" placeholder="Type answer here..."/>
 				</div>
 				<div class="questionSection">
-					<button class="questionDeleteBtn">Delete</button>
+					<button class="questionDeleteBtn waves-effect waves-light btn redBtn">Delete</button>
 				</div>
 			</div>`);
 	});
@@ -566,7 +586,7 @@ function addQuestionListeners() {
 					</div>
 				</div>
 				<div class="questionSection">
-					<button class="questionDeleteBtn">Delete</button>
+					<button class="questionDeleteBtn waves-effect waves-light btn redBtn">Delete</button>
 				</div>
 			</div>`);
 		questionCounterIndex++;
@@ -574,6 +594,13 @@ function addQuestionListeners() {
 		let firstRadio = $("#quizEditList").children().last().children().eq(1).children().eq(0).children().eq(0);
 		$(firstRadio).prop("checked", true);
 	});
+
+	$("#guestLoginBtn").on("click", function(event) {
+		event.preventDefault();
+		window.location = "./login.html";
+	});
+
+
 }
 
 function parseMultipleChoice(question) {

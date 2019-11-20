@@ -105,7 +105,7 @@ function addButtonListeners() {
 				dataType: "json",
 				contentType: "application/json",
 				success: function(responseJSON){
-					console.log("Successfully created quiz");
+					window.location = "/index.html";
 				},
 				error: function(error){
 					console.log("Error: " + error);
@@ -120,28 +120,28 @@ function addButtonListeners() {
 			<div class="question multipleChoice">
 				<div class="questionSection">
 					<label for="questionTitle">Question:</label>
-					<input type="text" name="questionTitle" class="questionTitle"/>
+					<input type="text" name="questionTitle" class="questionTitle" placeholder="Type the question title..."/>
 				</div>
 				<div class="questionSection">
 					<div class="choice">
-						<input type="radio" name="questionChoice${questionCounterCreate}" value="1" />
-						<input type="text"/>
+						<input type="radio" class="browser-default" name="questionChoice${questionCounterCreate}" value="1" />
+						<input type="text" class="browser-default choiceText" placeholder="Option 1"/>
 					</div>
 					<div class="choice">
-						<input type="radio" name="questionChoice${questionCounterCreate}" value="2" />
-						<input type="text"/>
+						<input type="radio" class="browser-default" name="questionChoice${questionCounterCreate}" value="2" />
+						<input type="text" class="browser-default choiceText" placeholder="Option 2"/>
 					</div>
 					<div class="choice">
-						<input type="radio" name="questionChoice${questionCounterCreate}" value="3" />
-						<input type="text"/>
+						<input type="radio" class="browser-default" name="questionChoice${questionCounterCreate}" value="3" />
+						<input type="text" class="browser-default choiceText" placeholder="Option 3"/>
 					</div>
 					<div class="choice">
-						<input type="radio" name="questionChoice${questionCounterCreate}" value="4" />
-						<input type="text"/>
+						<input type="radio" class="browser-default" name="questionChoice${questionCounterCreate}" value="4" />
+						<input type="text" class="browser-default choiceText" placeholder="Option 4"/>
 					</div>
 				</div>
 				<div class="questionSection">
-					<button class="questionDeleteBtn">Delete</button>
+					<button class="questionDeleteBtn waves-effect waves-light btn redBtn">Delete</button>
 				</div>
 			</div>`);
 		questionCounterCreate++;
@@ -158,28 +158,28 @@ function addButtonListeners() {
 			<div class="question multipleAnswer">
 				<div class="questionSection">
 					<label for="questionTitle">Question:</label>
-					<input type="text" name="questionTitle" class="questionTitle"/>
+					<input type="text" name="questionTitle" class="questionTitle" placeholder="Type the question title..."/>
 				</div>
 				<div class="questionSection">
 					<div class="choice">
 						<input type="checkbox" value="1" />
-						<input type="text"/>
+						<input type="text" class="browser-default choiceText" placeholder="Option 1"/>
 					</div>
 					<div class="choice">
 						<input type="checkbox" value="2" />
-						<input type="text"/>
+						<input type="text" class="browser-default choiceText" placeholder="Option 2"/>
 					</div>
 					<div class="choice">
 						<input type="checkbox" value="3" />
-						<input type="text"/>
+						<input type="text" class="browser-default choiceText" placeholder="Option 3"/>
 					</div>
 					<div class="choice">
 						<input type="checkbox" value="4" />
-						<input type="text"/>
+						<input type="text" class="browser-default choiceText" placeholder="Option 4"/>
 					</div>
 				</div>
 				<div class="questionSection">
-					<button class="questionDeleteBtn">Delete</button>
+					<button class="questionDeleteBtn waves-effect waves-light btn redBtn">Delete</button>
 				</div>
 			</div>`);
 	});
@@ -191,13 +191,13 @@ function addButtonListeners() {
 			<div class="question openEnded">
 				<div class="questionSection">
 					<label for="questionTitle">Question:</label>
-					<input type="text" name="questionTitle" class="questionTitle"/>
+					<input type="text" name="questionTitle" class="questionTitle" placeholder="Type the question title..."/>
 				</div>
 				<div class="questionSection">
-					<input type="text" class="questionText"/>
+					<input type="text" class="questionText browser-default choiceText" placeholder="Type answer here..."/>
 				</div>
 				<div class="questionSection">
-					<button class="questionDeleteBtn">Delete</button>
+					<button class="questionDeleteBtn waves-effect waves-light btn redBtn">Delete</button>
 				</div>
 			</div>`);
 	});
@@ -209,7 +209,7 @@ function addButtonListeners() {
 			<div class="question trueFalse">
 				<div class="questionSection">
 					<label for="questionTitle">Question:</label>
-					<input type="text" name="questionTitle" class="questionTitle"/>
+					<input type="text" name="questionTitle" class="questionTitle" placeholder="Type the question title..."/>
 				</div>
 				<div class="questionSection">
 					<div class="choice">
@@ -222,7 +222,7 @@ function addButtonListeners() {
 					</div>
 				</div>
 				<div class="questionSection">
-					<button class="questionDeleteBtn">Delete</button>
+					<button class="questionDeleteBtn waves-effect waves-light btn redBtn">Delete</button>
 				</div>
 			</div>`);
 		questionCounterCreate++;
