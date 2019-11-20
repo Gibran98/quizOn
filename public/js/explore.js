@@ -258,6 +258,7 @@ function parseMultipleChoice(question) {
 			return $(radioBtn).val();
 		}
 	}
+	return "-1";
 }
 
 function parseMultipleAnswer(question) {
@@ -280,8 +281,12 @@ function parseOpenEnded(question) {
 
 function parseTrueFalse(question) {
 	let choice = $(question).find(".choice")[0];
-	let radioBtn = $(choice).children().eq(0);
-	return $(radioBtn).is(":checked");
+	let trueBtn = $(choice).children().eq(0);
+	let falseBtn = $(choice).children().eq(1);
+	if(!$(trueBtn).is(":checked") && !$(falseBtn).is(":checked"))
+		return null;
+
+	return $(trueBtn).is(":checked");
 }
 
 function gradeQuiz(quiz) {
