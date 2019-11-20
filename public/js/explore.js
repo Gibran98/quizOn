@@ -280,9 +280,10 @@ function parseOpenEnded(question) {
 }
 
 function parseTrueFalse(question) {
-	let choice = $(question).find(".choice")[0];
-	let trueBtn = $(choice).children().eq(0);
-	let falseBtn = $(choice).children().eq(1);
+	let choiceTrue = $(question).find(".choice")[0];
+	let trueBtn = $(choiceTrue).children().eq(0);
+	let choiceFalse = $(question).find(".choice")[1];
+	let falseBtn = $(choiceFalse).children().eq(0);
 	if(!$(trueBtn).is(":checked") && !$(falseBtn).is(":checked"))
 		return null;
 
