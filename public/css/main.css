@@ -2,8 +2,6 @@
 	box-sizing: border-box;	
 }
 
-/*TODO: FIX NAV BAR LINKS */
-
 body {
 	margin: 0;
 	padding: 0;
@@ -43,6 +41,12 @@ h3 {
 	float: left;
 	padding: 10px 20px;
 	color: white;
+	font-size: 20px;
+    text-align: center;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #navMenu > li:hover, .selected {
@@ -84,4 +88,24 @@ input:focus {
 
 .greenBtn:hover {
 	background-color: #367c39;
+}
+
+label {
+	font-size: 18px;
+	color: #202020;
+}
+
+label.active {
+	font-size: 20px;
+}
+
+[type="submit"] {
+	color: white;
+	font-weight: bold;
+}
+
+.error {
+	font-weight: bold;
+    margin: 8px 0;
+    color: red;
 }

@@ -21,9 +21,13 @@ function setNavMenu() {
 	if(!user.password) {
 		$("#loginLink").text("Log-in");
 		$("#createLink").hide();
+		$(".navLink").css("width", "33.3333%")
+
+
 	} else {
 		$("#loginLink").text("Log-out");
 		$("#createLink").show();
+		$(".navLink").css("width", "25%");
 	}
 
 	$(".navLink").on("click", function(event) {
