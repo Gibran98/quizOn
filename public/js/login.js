@@ -3,9 +3,9 @@ localStorage.removeItem('globalUser');
 $("#registerForm").on("submit", function(event) {
 	event.preventDefault();
 
-	let username = $("#userNameInputReg").val();
-	let password = $("#passwordInputReg").val();
-	let passwordConfirm = $("#passwordConfirmInputReg").val();
+	let username = sanitize($("#userNameInputReg").val());
+	let password = sanitize($("#passwordInputReg").val());
+	let passwordConfirm = sanitize($("#passwordConfirmInputReg").val());
 
 	if(username=="" || password=="" || passwordConfirm=="") {
 		$("#registerError").text("Please fill all the fields");
@@ -14,6 +14,11 @@ $("#registerForm").on("submit", function(event) {
 	
 	if(passwordConfirm !== password) {
 		$("#registerError").text("Passwords don't match");
+		return;
+	}
+
+	if(password.length < 8) {
+		$("#registerError").text("Password must have at least 8 characters");
 		return;
 	}
 	
@@ -44,8 +49,8 @@ $("#loginForm").on("submit", function(event) {
 	event.preventDefault();
 
 	let newUser = {
-		username: $("#userNameInputLogin").val(),
-		password: $("#passwordInputLogin").val()
+		username: sanitize($("#userNameInputLogin").val()),
+		password: sanitize($("#passwordInputLogin").val())
 	}
 
 	$.ajax({
@@ -64,3 +69,16 @@ $("#loginForm").on("submit", function(event) {
 	});
 });
 
+function sanitize(string) {
+  const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#x27;',
+      "/": '&#x2F;',
+      '`': '&grave;'
+  };
+  const reg = /[&<>"'/`]/ig;
+  return string.replace(reg, (match)=>(map[match]));
+}

@@ -14,7 +14,7 @@ function setUp() {
 
 function setUsername() {
 	user = JSON.parse(localStorage.getItem('globalUser')) || {username: "Guest"};
-	$("#userLabel").text(user.username);
+	$("#userLabel").text(sanitize(user.username));
 }
 
 function setNavMenu() {
@@ -36,6 +36,20 @@ function setNavMenu() {
 		window.location = $(this).attr('href');
 	})
 
+}
+
+function sanitize(string) {
+  const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#x27;',
+      "/": '&#x2F;',
+      '`': '&grave;'
+  };
+  const reg = /[&<>"'/]/ig;
+  return string.replace(reg, (match)=>(map[match]));
 }
 
 setUp();

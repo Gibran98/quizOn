@@ -20,7 +20,7 @@ $("#quizList").on("click", ".takeQuizBtn", function(event) {
 
 $("#searchTitleBtn").on("click", function(event) {
 	event.preventDefault();
-	if ($("#searchBarTitle").val() == "")
+	if (sanitize($("#searchBarTitle").val()) == "")
 		loadAllQuizzes();
 	else
 		loadQuizzesByTitle();
@@ -28,7 +28,7 @@ $("#searchTitleBtn").on("click", function(event) {
 
 $("#searchTagsBtn").on("click", function(event) {
 	event.preventDefault();
-	if ($("#searchBarTags").val() == "")
+	if (sanitize($("#searchBarTags").val()) == "")
 		loadAllQuizzes();
 	else
 		loadQuizzesByTags();
@@ -251,7 +251,6 @@ function addTrueFalseQuestion(question) {
 
 function parseMultipleChoice(question) {
 	let choices = $(question).find(".choice");
-	console.log(choices);
 	for (let choice of choices) {
 		let radioBtn = $(choice).children().eq(0);
 		if ($(radioBtn).is(":checked")){
@@ -358,6 +357,20 @@ function showQuizResults(gradedAnswers) {
 		<label>Results: ${correctCounter}/${gradedAnswers.length} (${(correctCounter/gradedAnswers.length*100).toFixed(2)}%)</label>
 		`);
 	return (correctCounter/gradedAnswers.length*100).toFixed(2);
+}
+
+function sanitize(string) {
+  const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#x27;',
+      "/": '&#x2F;',
+      '`': '&grave;'
+  };
+  const reg = /[&<>"'/`]/ig;
+  return string.replace(reg, (match)=>(map[match]));
 }
 
 loadAllQuizzes();

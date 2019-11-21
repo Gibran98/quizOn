@@ -141,8 +141,8 @@ function addButtonListeners(){
 
 		let quizId = event.target.id;
 
-		let quizTitle = $("#quizTitle").val();
-		let quizTags = $("#quizTags").val().split(",").map(x => x.trim().toLowerCase());
+		let quizTitle = sanitize($("#quizTitle").val());
+		let quizTags = $("#quizTags").val().split(",").map(x => sanitize(x.trim().toLowerCase()));
 		let quizQuestions = [];
 
 		let questions = $(".question");
@@ -176,8 +176,7 @@ function addButtonListeners(){
 				dataType: "json",
 				contentType: "application/json",
 				success: function(responseJSON){
-					window.location = "./index.html"
-					console.log("Successfully updated quiz");
+					window.location = "./index.html";
 				},
 				error: function(error){
 					console.log(error);
@@ -334,8 +333,8 @@ function loadQuizEditor(quiz){
 	$("#userSection").hide();
 	$("#editQuizSection").show();
 
-	$("#quizTitle").val(quiz.quizTitle);
-	$("#quizTags").val(quiz.quizTags.join(', '));
+	$("#quizTitle").val(sanitize(quiz.quizTitle));
+	$("#quizTags").val(sanitize(quiz.quizTags.join(', ')));
 
 	for(let question of quiz.quizQuestions) {
 		if(question.questionType == QuestionTypes.MULTIPLE_CHOICE) {
@@ -604,13 +603,13 @@ function addQuestionListeners() {
 }
 
 function parseMultipleChoice(question) {
-	let questionTitle = $($(question).find(".questionTitle")[0]).val();
+	let questionTitle = sanitize($($(question).find(".questionTitle")[0]).val());
 	let choices = $(question).find(".choice");
 	let choiceTexts = [];
 	let correctAns;
 
 	for (let choice of choices) {
-		choiceTexts.push($(choice).children().eq(1).val());
+		choiceTexts.push(sanitize($(choice).children().eq(1).val()));
 		let radioBtn = $(choice).children().eq(0);
 		if ($(radioBtn).is(":checked")){
 			correctAns = $(radioBtn).val();
@@ -626,13 +625,13 @@ function parseMultipleChoice(question) {
 }
 
 function parseMultipleAnswer(question) {
-	let questionTitle = $($(question).find(".questionTitle")[0]).val();
+	let questionTitle = sanitize($($(question).find(".questionTitle")[0]).val());
 	let choices = $(question).find(".choice");
 	let choiceTexts = [];
 	let correctAns = [];
 
 	for (let choice of choices) {
-		choiceTexts.push($(choice).children().eq(1).val());
+		choiceTexts.push(sanitize($(choice).children().eq(1).val()));
 		let radioBtn = $(choice).children().eq(0);
 		if ($(radioBtn).is(":checked")){
 			correctAns.push($(radioBtn).val());
@@ -648,8 +647,8 @@ function parseMultipleAnswer(question) {
 }
 
 function parseOpenEnded(question) {
-	let questionTitle = $($(question).find(".questionTitle")[0]).val();
-	let correctAns = $($(question).find(".questionText")[0]).val().toLowerCase();
+	let questionTitle = sanitize($($(question).find(".questionTitle")[0]).val());
+	let correctAns = sanitize($($(question).find(".questionText")[0]).val().toLowerCase());
 	return {
 		questionTitle,
 		correctAns,
@@ -658,7 +657,7 @@ function parseOpenEnded(question) {
 }
 
 function parseTrueFalse(question) {
-	let questionTitle = $($(question).find(".questionTitle")[0]).val();
+	let questionTitle = sanitize($($(question).find(".questionTitle")[0]).val());
 	let choice = $(question).find(".choice")[0];
 	let radioBtn = $(choice).children().eq(0);
 	let correctAns = $(radioBtn).is(":checked");
@@ -670,6 +669,19 @@ function parseTrueFalse(question) {
 	}
 }
 
+function sanitize(string) {
+  const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#x27;',
+      "/": '&#x2F;',
+      '`': '&grave;'
+  };
+  const reg = /[&<>"'/`]/ig;
+  return string.replace(reg, (match)=>(map[match]));
+}
 
 loadHomePage();
 addButtonListeners();
